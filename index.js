@@ -109,13 +109,13 @@ function Physics (mcData, world) {
     const surroundingBBs = []
     const cursor = new Vec3(0, 0, 0)
     for (cursor.y = Math.floor(queryBB.minY) - 1; cursor.y <= Math.floor(queryBB.maxY); cursor.y++) {
-      for (cursor.z = Math.floor(queryBB.minZ); cursor.z <= Math.floor(queryBB.maxZ); cursor.z++) {
-        for (cursor.x = Math.floor(queryBB.minX); cursor.x <= Math.floor(queryBB.maxX); cursor.x++) {
+      for (cursor.z = Math.floor(queryBB.minZ) - 1; cursor.z <= Math.floor(queryBB.maxZ) + 1; cursor.z++) {
+        for (cursor.x = Math.floor(queryBB.minX) - 1; cursor.x <= Math.floor(queryBB.maxX) + 1; cursor.x++) {
           const block = world.getBlock(cursor)
           if (block) {
             const blockPos = block.position
             for (const shape of block.shapes) {
-              const blockBB = new AABB(shape[0], shape[1], shape[2], shape[3], shape[4], shape[5])
+              const blockBB = new AABB(shape[0] - 0.01, shape[1], shape[2] - 0.01, shape[3] + 0.01, shape[4], shape[5] + 0.01)
               blockBB.offset(blockPos.x, blockPos.y, blockPos.z)
               surroundingBBs.push(blockBB)
             }
